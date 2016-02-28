@@ -1,34 +1,22 @@
 #! /bin/python
 # -*- coding: utf-8 -*-
 
+def merge_sort(lista):
+    if len(lista) <= 1:
+        return lista
+    mitad = len(lista) // 2
+    izquierda = merge_sort(lista[:mitad])
+    derecha = merge_sort(lista[mitad:])
+    return merge(izquierda, derecha)
 
-def mergeSort(arreglo):
-    if len(arreglo) > 1:
-        mitad = len(arreglo)
-        parte_izquierda = arreglo[:mitad]
-        parte_derecha = arreglo[mitad:]
-        mergeSort(parte_izquierda)
-        mergeSort(parte_derecha)
-        i=0
-        j=0
-        k=0
-        while i < len(parte_izquierda) and j < len(parte_derecha):
-            if parte_izquierda[i] < parte_derecha[j]:
-                arreglo[k]=parte_izquierda[i]
-                i=i+1
-            else:
-                arreglo[k]=parte_derecha[j]
-                j=j+1
-            k=k+1
-        while i < len(parte_izquierda):
-            arreglo[k]=parte_izquierda[i]
-            i=i+1
-            k=k+1
-        while j < len(parte_derecha):
-            arreglo[k]=parte_derecha[j]
-            j=j+1
-            k=k+1
-    return arreglo
+def merge(izquierda, derecha):
+    if not izquierda:
+        return derecha
+    if not derecha:
+        return izquierda
+    if izquierda[0] < derecha[0]:
+        return [izquierda[0]] + merge(izquierda[1:], derecha)
+    return [derecha[0]] + merge(izquierda, derecha[1:])
 
 def main():
 	salir = True
@@ -41,7 +29,7 @@ def main():
 		except:
 			print "Iniciando el Algoritmo"
 			salir = False
-	print mergeSort(valores)
-
+	print merge_sort(valores)
+	print "Algoritmo terminado"
 main()
 
